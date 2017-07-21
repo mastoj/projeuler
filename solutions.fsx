@@ -7,4 +7,15 @@ module Problem1 =
     let solution1 = sum3And5Mulitples 999
 
  module Problem2 = 
-    
+
+    let generateFib() =
+
+        let rec inner (x,y) = 
+            seq {
+                let nextValue = x + y
+                yield x + y
+                yield! inner (nextValue, x)
+            }
+        inner (1,0)        
+    let isEven x = x % 2 = 0
+    let solution2 = generateFib() |> Seq.takeWhile ((>) 4000000) |> Seq.filter isEven |> Seq.sum
