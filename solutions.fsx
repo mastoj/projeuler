@@ -55,3 +55,15 @@ module Problem4 =
             }
 
     let solution4 = palindromeProducts 999 100 |> Seq.max
+
+module Problem5 = 
+
+    let isDividedByList list x = 
+        list |> List.exists (fun i -> x % i <> 0) |> not
+
+    let getMultiples numbers = 
+        Seq.initInfinite id
+        |> Seq.filter ((<) 0)
+        |> Seq.filter (isDividedByList numbers)
+
+    let solution5 = getMultiples [1 .. 20] |> Seq.head
