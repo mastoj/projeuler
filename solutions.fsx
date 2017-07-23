@@ -79,4 +79,21 @@ module Problem6 =
 
     let solution() = findSquareDiff 100L
 
-Problem6.solution() |> printfn "Solution %A: "
+module Problem7 = 
+    let isPrime (x:int64) = 
+        let minCandidate = sqrt (float x) |> int64
+        seq { for i in 2L .. minCandidate do yield x % i = 0L }
+        |> Seq.exists id
+        |> not
+
+    let findNthPrime nth =
+        Seq.initInfinite id
+        |> Seq.map int64
+        |> Seq.filter ((<) 1L)
+        |> Seq.filter isPrime
+        |> Seq.skip (nth - 1)
+        |> Seq.head
+
+    let solution() = findNthPrime 10001
+
+Problem7.solution() |> printfn "Solution %A: "
