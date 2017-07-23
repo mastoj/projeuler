@@ -1,3 +1,5 @@
+open System
+
 module Problem1 = 
     let isMultiplier x y = y % x = 0
     let isMultiplier3 = isMultiplier 3
@@ -38,3 +40,18 @@ module Problem3 =
     let findMaxPrimeFactor = findFactors >> Seq.max
    
     let solution3 = findMaxPrimeFactor 600851475143L
+   
+module Problem4 = 
+    open System
+
+    let isPalindromeNumber x = 
+        let xStr = x.ToString()
+        xStr = String(Array.rev(xStr.ToCharArray()))
+
+    let palindromeProducts maxNum minNum = 
+        seq { for x in maxNum .. -1 .. minNum do
+                 for y in x .. -1 .. minNum do
+                    if isPalindromeNumber (x*y) then yield x*y
+            }
+
+    let solution4 = palindromeProducts 999 100 |> Seq.max
