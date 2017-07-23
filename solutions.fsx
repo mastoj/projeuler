@@ -6,7 +6,7 @@ module Problem1 =
     let isMultiplier5 = isMultiplier 5
     let isMultiplier3Or5 x = (isMultiplier3 x) || (isMultiplier5 x)
     let sum3And5Mulitples x = [0 .. x] |> List.filter isMultiplier3Or5 |> List.sum
-    let solution1 = sum3And5Mulitples 999
+    let solution() = sum3And5Mulitples 999
 
 module Problem2 = 
 
@@ -20,7 +20,7 @@ module Problem2 =
             }
         inner (1,0)        
     let isEven x = x % 2 = 0
-    let solution2 = generateFib() |> Seq.takeWhile ((>) 4000000) |> Seq.filter isEven |> Seq.sum
+    let solution() = generateFib() |> Seq.takeWhile ((>) 4000000) |> Seq.filter isEven |> Seq.sum
 
 module Problem3 = 
     
@@ -39,7 +39,7 @@ module Problem3 =
 
     let findMaxPrimeFactor = findFactors >> Seq.max
    
-    let solution3 = findMaxPrimeFactor 600851475143L
+    let solution() = findMaxPrimeFactor 600851475143L
    
 module Problem4 = 
     open System
@@ -54,7 +54,7 @@ module Problem4 =
                     if isPalindromeNumber (x*y) then yield x*y
             }
 
-    let solution4 = palindromeProducts 999 100 |> Seq.max
+    let solution() = palindromeProducts 999 100 |> Seq.max
 
 module Problem5 = 
 
@@ -66,4 +66,17 @@ module Problem5 =
         |> Seq.filter ((<) 0)
         |> Seq.filter (isDividedByList numbers)
 
-    let solution5 = getMultiples [1 .. 20] |> Seq.head
+    let solution() = getMultiples [1 .. 20] |> Seq.head
+
+module Problem6 = 
+    let findSquareDiff maxNum = 
+        let rec inner currentNum acc1 acc2 = 
+            if currentNum > maxNum then
+                (acc2*acc2) - acc1
+            else
+                inner (currentNum + 1L) (acc1 + currentNum*currentNum) (acc2 + currentNum)
+        inner 1L 0L 0L
+
+    let solution() = findSquareDiff 100L
+
+Problem6.solution() |> printfn "Solution %A: "
