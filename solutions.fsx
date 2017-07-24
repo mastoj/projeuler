@@ -1,5 +1,22 @@
 open System
 
+[<AutoOpen>]
+module Utils = 
+
+
+    let isPrimeInt x = 
+        let minCandidate = sqrt (float x) |> int
+        seq { for i in 2 .. minCandidate do yield x % i = 0 }
+        |> Seq.exists id
+        |> not
+
+    let isPrimeInt64 (x:int64) = 
+        let minCandidate = sqrt (float x) |> int64
+        seq { for i in 2L .. minCandidate do yield x % i = 0L }
+        |> Seq.exists id
+        |> not
+
+
 module Problem1 = 
     let isMultiplier x y = y % x = 0
     let isMultiplier3 = isMultiplier 3
@@ -80,17 +97,11 @@ module Problem6 =
     let solution() = findSquareDiff 100L
 
 module Problem7 = 
-    let isPrime (x:int64) = 
-        let minCandidate = sqrt (float x) |> int64
-        seq { for i in 2L .. minCandidate do yield x % i = 0L }
-        |> Seq.exists id
-        |> not
-
     let findNthPrime nth =
         Seq.initInfinite id
         |> Seq.map int64
         |> Seq.filter ((<) 1L)
-        |> Seq.filter isPrime
+        |> Seq.filter isPrimeInt64
         |> Seq.skip (nth - 1)
         |> Seq.head
 
@@ -145,4 +156,13 @@ module Problem9 =
 
     let solution() = findPythagoreanTripletsOf 1000 |> Seq.head |> (fun (i,j,k) -> i*j*k)
 
-Problem9.solution() |> printfn "Solution %A: "
+module Problem10 =
+
+    let getPrimesLessThan x = 
+        seq { for i in 2L .. (x-1L) do if isPrimeInt64 i then yield i}
+
+    let sumPrimeLessThan = getPrimesLessThan >> Seq.sum
+
+    let solution() = sumPrimeLessThan 2000000L
+
+Problem10.solution() |> printfn "Solution %A: "
