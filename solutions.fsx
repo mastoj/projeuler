@@ -134,4 +134,15 @@ module Problem8 =
 
     let solution() = findNLengthLarges inputStr 13
 
-Problem8.solution() |> printfn "Solution %A: "
+module Problem9 = 
+    let findPythagoreanTripletsOf x = 
+        seq {
+            for i in 1 .. x do 
+                for j in i .. x do
+                    for k in j .. x do 
+                        if i + j + k = x && i*i + j*j = k*k then yield (i,j,k)
+        }
+
+    let solution() = findPythagoreanTripletsOf 1000 |> Seq.head |> (fun (i,j,k) -> i*j*k)
+
+Problem9.solution() |> printfn "Solution %A: "
